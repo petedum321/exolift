@@ -1,0 +1,80 @@
+<body>
+  <h1 class="page-title">ExoLift - Caminhada Inteligente</h1>
+
+  <main class="main-container">
+    <!-- Card 1 com moldura decorativa -->
+    <div class="card-frame">
+      <mat-card class="home-card">
+        <h1>
+          <mat-icon color="primary" class="header-icon">directions_walk</mat-icon>
+          Iniciar Caminhada
+        </h1>
+
+        <mat-radio-group [(ngModel)]="selectedOption" class="radio-group" aria-label="Modo de caminhada">
+          <mat-radio-button value="time" class="radio-btn">
+            <mat-icon>schedule</mat-icon>
+            Por Tempo
+          </mat-radio-button>
+          <mat-radio-button value="distance" class="radio-btn">
+            <mat-icon>place</mat-icon>
+            Por Distância
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field appearance="outline" class="input-field">
+          <mat-label>
+            {{ selectedOption === 'time' ? 'Tempo (minutos)' : 'Distância (km)' }}
+          </mat-label>
+          <input matInput type="number" min="1" [(ngModel)]="inputValue" />
+          <mat-icon matSuffix>
+            {{ selectedOption === 'time' ? 'schedule' : 'straighten' }}
+          </mat-icon>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="start-btn"
+          (click)="startWalk()"
+          [disabled]="!inputValue || inputValue <= 0"
+        >
+          <mat-icon>play_arrow</mat-icon>
+          Começar Caminhada
+        </button>
+      </mat-card>
+    </div>
+
+    <!-- Card 2 com moldura decorativa -->
+    <div class="card-frame">
+      <mat-card class="home-card table-card">
+        <h2>
+          <mat-icon color="primary" class="header-icon">history</mat-icon>
+          Últimas Caminhadas
+        </h2>
+
+        <table mat-table [dataSource]="walks" class="mat-elevation-z8 walk-table">
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Data </th>
+            <td mat-cell *matCellDef="let walk"> {{walk.date}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="distance">
+            <th mat-header-cell *matHeaderCellDef> Distância (km) </th>
+            <td mat-cell *matCellDef="let walk"> {{walk.distance}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef> Tempo (min) </th>
+            <td mat-cell *matCellDef="let walk"> {{walk.time}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="avgSpeed">
+            <th mat-header-cell *matHeaderCellDef> Velocidade Média (km/h) </th>
+            <td mat-cell *matCellDef="let walk"> {{walk.avgSpeed | number:'1.1-2'}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card>
+    </div>
+  </main>
+</body>

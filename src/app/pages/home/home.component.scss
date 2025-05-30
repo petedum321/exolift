@@ -1,0 +1,158 @@
+/* ----- Fundo geral e layout da página ----- */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(180deg, #e6f0ff 0%, #d0e4ff 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px 60px;
+  color: #2c3e99;
+}
+
+/* ----- Título principal da página ----- */
+.page-title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 36px;
+  color: #3f51b5;
+  text-shadow: 1px 1px 5px rgba(63,81,181,0.3);
+  letter-spacing: 1.2px;
+  user-select: none;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  animation: fadeInDown 1s ease forwards;
+}
+
+/* ----- Animação para o título ----- */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  } to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----- Container geral para alinhar os cards ----- */
+.main-container {
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ----- Moldura decorativa em volta dos cards (estilo chassis) ----- */
+.card-frame {
+  position: relative;
+  padding: 12px;
+  border: 2.5px solid #9bb9f3; /* azul claro */
+  border-radius: 18px;
+  box-shadow: 0 0 15px 4px rgba(63,81,181,0.12);
+  background: #f7faff;
+  transition: box-shadow 0.3s ease;
+}
+
+.card-frame:hover {
+  box-shadow: 0 0 25px 6px rgba(63,81,181,0.25);
+}
+
+/* ----- Estilo dos cards ----- */
+.home-card {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.1);
+  background-color: #fff;
+}
+
+/* ----- Icones do header ----- */
+.header-icon {
+  vertical-align: middle;
+  margin-right: 8px;
+  font-size: 36px;
+  color: #3f51b5;
+}
+
+/* ----- Grupo de radio buttons ----- */
+.radio-group {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  margin-bottom: 24px;
+}
+
+/* ----- Cada radio button ----- */
+.radio-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #3f51b5;
+}
+
+/* ----- Campo input ----- */
+.input-field {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.input-field input {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* ----- Botão iniciar caminhada ----- */
+.start-btn {
+  width: 100%;
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+}
+
+.start-btn mat-icon {
+  font-size: 24px;
+}
+
+/* ----- Card da tabela ----- */
+.table-card {
+  margin-top: 48px;
+  padding: 24px 16px;
+}
+
+/* ----- Tabela de caminhadas ----- */
+.walk-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border-collapse: collapse;
+}
+
+.walk-table th {
+  background-color: #3f51b5;
+  color: white;
+  font-weight: 600;
+  padding: 12px 8px;
+}
+
+.walk-table td {
+  padding: 12px 8px;
+  color: #2c3e99;
+}
+
+.walk-table tr.mat-row:nth-child(odd) {
+  background-color: #f7f7f7;
+}
