@@ -1,27 +1,26 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { webSocket, WebSocketSubject } from "rxjs/webSocket";
+import { Observable, switchMap, timer } from "rxjs";
 
-export interface Esp32Message {
+export interface Esp32Data {
   msg: string;
   value: number;
+  temperatura: number;
+  umidade: number;
+  status: string;
 }
 
 @Injectable({
   providedIn: "root",
 })
 export class WebsocketService {
-  private socket$: WebSocketSubject<Esp32Message>;
+  private esp32Url = "http://192.168.0.105/data"; // Coloque o IP do ESP32 aqui
 
-  constructor() {
-    this.socket$ = webSocket<Esp32Message>("ws://192.168.1.100:8080/");
-  }
+  constructor(private http: HttpClient) {}
 
-  public getMessages(): Observable<Esp32Message> {
-    return this.socket$.asObservable();
-  }
-
-  public close() {
-    this.socket$.complete();
+  getData(): Observable<Esp32Data> {
+    return timer(0, 2000).pipe(
+      switchMap(() => this.http.get<Esp32Data>(this.esp32Url))
+    );
   }
 }

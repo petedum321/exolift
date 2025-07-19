@@ -1,3 +1,141 @@
-<h1>Dados do ESP32 via WebSocket</h1>
-<p><strong>Mensagem:</strong> {{ latestMsg?.msg }}</p>
-<p><strong>Valor:</strong> {{ latestMsg?.value }}</p>
+<!-- HEADER FIXO COM LOGO -->
+<header class="header">
+  <img
+    src="/assets/logo-exolift.png"
+    alt="ExoLift Exoesqueleto Logo"
+    class="logo"
+  />
+  <h1 class="title">Monitoramento do Exoesqueleto</h1>
+</header>
+
+<div class="container">
+  <p class="subtitle">Dados em tempo real</p>
+
+  <mat-divider></mat-divider>
+
+  <!-- SEÇÃO DADOS CAMINHADA -->
+  <section class="section">
+    <h3>📈 Dados da Caminhada</h3>
+    <div class="goal">🎯 Meta: <strong>5 metros</strong></div>
+
+    <div class="grid-cards">
+      <mat-card class="card-highlight">
+        <mat-card-header>
+          <mat-icon color="primary">timer</mat-icon>
+          <mat-card-title>Tempo Decorrido</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h2>{{ tempoDecorrido }}</h2>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-highlight">
+        <mat-card-header>
+          <mat-icon color="primary">show_chart</mat-icon>
+          <mat-card-title>Progresso</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h2>{{ progresso }}%</h2>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="progresso"
+            color="primary"
+          ></mat-progress-bar>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-highlight">
+        <mat-card-header>
+          <mat-icon color="primary">directions_walk</mat-icon>
+          <mat-card-title>Passos</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h2>{{ passos }}</h2>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-highlight">
+        <mat-card-header>
+          <mat-icon color="primary">speed</mat-icon>
+          <mat-card-title>Velocidade</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h2>{{ velocidade }} m/s</h2>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <mat-divider></mat-divider>
+
+  <!-- SEÇÃO DADOS TÉCNICOS -->
+  <section class="section">
+    <h3>🛠️ Dados Técnicos</h3>
+
+    <div class="grid-motors">
+      <mat-card class="motor-card left">
+        <mat-card-header>
+          <mat-icon color="primary">accessibility_new</mat-icon>
+          <mat-card-title>Perna Esquerda</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngFor="let motor of pernaEsquerda" class="motor-info">
+            <h4>
+              ⚡ Motor {{ motor.id }}
+              <span class="status normal">NORMAL</span>
+            </h4>
+            <p>Ângulo: {{ motor.angulo.toFixed(2) }}°</p>
+            <p>Torque: {{ motor.torque.toFixed(2) }} Nm</p>
+            <p>Corrente: {{ motor.corrente.toFixed(2) }} A</p>
+            <p>Temperatura: {{ motor.temperatura.toFixed(2) }} °C</p>
+            <p>RPM: {{ motor.rpm.toFixed(0) }}</p>
+            <mat-divider></mat-divider>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="motor-card right">
+        <mat-card-header>
+          <mat-icon color="primary">accessibility_new</mat-icon>
+          <mat-card-title>Perna Direita</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngFor="let motor of pernaDireita" class="motor-info">
+            <h4>
+              ⚡ Motor {{ motor.id }}
+              <span class="status normal">NORMAL</span>
+            </h4>
+            <p>Ângulo: {{ motor.angulo.toFixed(2) }}°</p>
+            <p>Torque: {{ motor.torque.toFixed(2) }} Nm</p>
+            <p>Corrente: {{ motor.corrente.toFixed(2) }} A</p>
+            <p>Temperatura: {{ motor.temperatura.toFixed(2) }} °C</p>
+            <p>RPM: {{ motor.rpm.toFixed(0) }}</p>
+            <mat-divider></mat-divider>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- BOTOES DE AÇÃO -->
+  <div class="actions">
+    <button
+      mat-raised-button
+      color="primary"
+      class="btn-pause"
+      aria-label="Pausar treino"
+    >
+      <mat-icon>pause_circle_filled</mat-icon>
+      Pausar
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      class="btn-stop"
+      aria-label="Finalizar treino"
+    >
+      <mat-icon>stop_circle</mat-icon>
+      Finalizar Treino
+    </button>
+  </div>
+</div>
