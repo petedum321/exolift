@@ -1,158 +1,169 @@
-/* ----- Fundo geral e layout da página ----- */
-body, html {
-  height: 100%;
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(180deg, #e6f0ff 0%, #d0e4ff 100%);
+// :root pode ser usado em styles.scss para variáveis globais,
+// :host é para o escopo do componente.
+:host {
+  --primary-color: #4a6cf7; // Um azul mais vibrante
+  --primary-dark: #3c56c6;
+  --text-dark: #1a202c;
+  --text-light: #5a6474;
+  --border-color: #e2e8f0;
+  --background-page: #f8f9fa;
+  --background-card: #ffffff;
+  --background-hover: #eef2ff;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --border-radius: 1rem; // 16px
+}
+
+// Estilo geral
+body,
+html {
+  background: var(--background-page);
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 40px 20px;
+}
+
+// Container principal
+.main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding: 40px 20px 60px;
-  color: #2c3e99;
+  gap: 32px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
 }
 
-/* ----- Título principal da página ----- */
-.page-title {
-  font-size: 3rem;
-  font-weight: 900;
-  margin-bottom: 36px;
-  color: #3f51b5;
-  text-shadow: 1px 1px 5px rgba(63,81,181,0.3);
-  letter-spacing: 1.2px;
-  user-select: none;
-  font-family: 'Poppins', 'Segoe UI', sans-serif;
-  animation: fadeInDown 1s ease forwards;
-}
+// Design dos Cards
+.home-card {
+  background: var(--background-card);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; // Permite que o card cresça
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-/* ----- Animação para o título ----- */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  } to {
-    opacity: 1;
-    transform: translateY(0);
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -4px rgba(0, 0, 0, 0.1);
   }
 }
 
-/* ----- Container geral para alinhar os cards ----- */
-.main-container {
-  width: 100%;
-  max-width: 540px;
+.card-header {
   display: flex;
-  flex-direction: column;
-  gap: 48px;
   align-items: center;
-  justify-content: center;
+  gap: 16px;
+  margin-bottom: 8px;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+  }
 }
 
-/* ----- Moldura decorativa em volta dos cards (estilo chassis) ----- */
-.card-frame {
-  position: relative;
-  padding: 12px;
-  border: 2.5px solid #9bb9f3; /* azul claro */
-  border-radius: 18px;
-  box-shadow: 0 0 15px 4px rgba(63,81,181,0.12);
-  background: #f7faff;
-  transition: box-shadow 0.3s ease;
-}
-
-.card-frame:hover {
-  box-shadow: 0 0 25px 6px rgba(63,81,181,0.25);
-}
-
-/* ----- Estilo dos cards ----- */
-.home-card {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 32px 24px;
-  text-align: center;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgb(0 0 0 / 0.1);
-  background-color: #fff;
-}
-
-/* ----- Icones do header ----- */
-.header-icon {
-  vertical-align: middle;
-  margin-right: 8px;
+.card-header-icon {
   font-size: 36px;
-  color: #3f51b5;
+  height: 36px;
+  width: 36px;
+  color: var(--primary-color);
 }
 
-/* ----- Grupo de radio buttons ----- */
+.card-subtitle {
+  color: var(--text-light);
+  margin: 0 0 24px;
+  font-size: 1rem;
+}
+
+// Inputs e Botões
 .radio-group {
-  display: flex;
-  justify-content: center;
-  gap: 36px;
   margin-bottom: 24px;
 }
 
-/* ----- Cada radio button ----- */
-.radio-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: 16px;
-  color: #3f51b5;
-}
-
-/* ----- Campo input ----- */
 .input-field {
-  width: 100%;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
-.input-field input {
-  text-align: center;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-/* ----- Botão iniciar caminhada ----- */
 .start-btn {
   width: 100%;
-  font-weight: 700;
-  font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 0;
+  padding: 20px 0; // Botão maior
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+
+  mat-icon {
+    margin-right: 8px;
+  }
 }
 
-.start-btn mat-icon {
-  font-size: 24px;
+// Tabela
+.table-container {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden; // Garante que a tabela interna se ajuste à borda arredondada
 }
 
-/* ----- Card da tabela ----- */
-.table-card {
-  margin-top: 48px;
-  padding: 24px 16px;
-}
-
-/* ----- Tabela de caminhadas ----- */
 .walk-table {
   width: 100%;
-  border-radius: 8px;
-  overflow: hidden;
-  border-collapse: collapse;
-}
 
-.walk-table th {
-  background-color: #3f51b5;
-  color: white;
-  font-weight: 600;
-  padding: 12px 8px;
-}
+  th.mat-header-cell {
+    background: none;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+  }
 
-.walk-table td {
-  padding: 12px 8px;
-  color: #2c3e99;
-}
+  td.mat-cell {
+    color: var(--text-dark);
+    font-weight: 500;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    // Fonte monoespaçada para números alinharem perfeitamente
+    &.numeric-cell {
+      font-family: "Roboto Mono", monospace;
+    }
+  }
 
-.walk-table tr.mat-row:nth-child(odd) {
-  background-color: #f7f7f7;
+  tr.mat-row:last-child td.mat-cell {
+    border-bottom: none;
+  }
+
+  tr.mat-row:hover {
+    background-color: var(--background-hover);
+  }
+
+  .numeric-header,
+  .numeric-cell {
+    text-align: right;
+  }
+
+  .no-data-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 48px;
+    text-align: center;
+    color: var(--text-light);
+    font-style: italic;
+  }
 }

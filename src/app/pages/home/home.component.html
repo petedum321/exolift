@@ -2,78 +2,121 @@
   <h1 class="page-title">ExoLift - Caminhada Inteligente</h1>
 
   <main class="main-container">
-    <!-- Card 1 com moldura decorativa -->
-    <div class="card-frame">
-      <mat-card class="home-card">
-        <h1>
-          <mat-icon color="primary" class="header-icon">directions_walk</mat-icon>
-          Iniciar Caminhada
-        </h1>
-
-        <mat-radio-group [(ngModel)]="selectedOption" class="radio-group" aria-label="Modo de caminhada">
-          <mat-radio-button value="time" class="radio-btn">
-            <mat-icon>schedule</mat-icon>
-            Por Tempo
-          </mat-radio-button>
-          <mat-radio-button value="distance" class="radio-btn">
-            <mat-icon>place</mat-icon>
-            Por Distância
-          </mat-radio-button>
-        </mat-radio-group>
-
-        <mat-form-field appearance="outline" class="input-field">
-          <mat-label>
-            {{ selectedOption === 'time' ? 'Tempo (minutos)' : 'Distância (km)' }}
-          </mat-label>
-          <input matInput type="number" min="1" [(ngModel)]="inputValue" />
-          <mat-icon matSuffix>
-            {{ selectedOption === 'time' ? 'schedule' : 'straighten' }}
-          </mat-icon>
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" class="start-btn"
-          (click)="startWalk()"
-          [disabled]="!inputValue || inputValue <= 0"
+    <div class="home-card">
+      <div class="card-header">
+        <mat-icon class="card-header-icon" fontSet="material-symbols-outlined"
+          >exercise</mat-icon
         >
-          <mat-icon>play_arrow</mat-icon>
-          Começar Caminhada
-        </button>
-      </mat-card>
+        <h1>Iniciar Novo Treino</h1>
+      </div>
+
+      <p class="card-subtitle">Escolha uma meta para começar a sua jornada.</p>
+
+      <mat-radio-group
+        [(ngModel)]="selectedOption"
+        class="radio-group"
+        aria-label="Modo de caminhada"
+      >
+        <mat-radio-button value="time" class="radio-btn"
+          >Por Tempo</mat-radio-button
+        >
+        <mat-radio-button value="distance" class="radio-btn"
+          >Por Distância</mat-radio-button
+        >
+      </mat-radio-group>
+
+      <mat-form-field appearance="fill" class="input-field">
+        <mat-label>
+          {{
+            selectedOption === "time" ? "Tempo (minutos)" : "Distância (metros)"
+          }}
+        </mat-label>
+        <input
+          matInput
+          type="number"
+          min="1"
+          [(ngModel)]="inputValue"
+          placeholder="Defina sua meta"
+        />
+        <mat-icon matSuffix fontSet="material-symbols-outlined">
+          {{ selectedOption === "time" ? "hourglass_empty" : "straighten" }}
+        </mat-icon>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="start-btn"
+        (click)="startWalk()"
+        [disabled]="!inputValue || inputValue <= 0"
+      >
+        <mat-icon fontSet="material-symbols-outlined">play_arrow</mat-icon>
+        <span>Começar Caminhada</span>
+      </button>
     </div>
-    <!-- Card 2 com moldura decorativa -->
-    <div class="card-frame">
-      <mat-card class="home-card table-card">
-        <h2>
-          <mat-icon color="primary" class="header-icon">history</mat-icon>
-          Últimas Caminhadas
-        </h2>
 
-        <table mat-table [dataSource]="walks" class="mat-elevation-z8 walk-table">
+    <div class="home-card">
+      <div class="card-header">
+        <mat-icon class="card-header-icon" fontSet="material-symbols-outlined"
+          >history</mat-icon
+        >
+        <h1>Histórico de Atividades</h1>
+      </div>
+      <p class="card-subtitle">
+        Revise o progresso das suas últimas caminhadas.
+      </p>
 
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef> Data </th>
-            <td mat-cell *matCellDef="let walk"> {{walk.date}} </td>
+      <div class="table-container">
+        <table mat-table [dataSource]="caminhadas()" class="walk-table">
+          <ng-container matColumnDef="data">
+            <th mat-header-cell *matHeaderCellDef>Data</th>
+            <td mat-cell *matCellDef="let walk">{{ walk.data }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="distance">
-            <th mat-header-cell *matHeaderCellDef> Distância (km) </th>
-            <td mat-cell *matCellDef="let walk"> {{walk.distance}} </td>
+          <ng-container matColumnDef="distancia">
+            <th mat-header-cell *matHeaderCellDef class="numeric-header">
+              Distância (m)
+            </th>
+            <td mat-cell *matCellDef="let walk" class="numeric-cell">
+              {{ walk.distancia }}
+            </td>
           </ng-container>
 
-          <ng-container matColumnDef="time">
-            <th mat-header-cell *matHeaderCellDef> Tempo (min) </th>
-            <td mat-cell *matCellDef="let walk"> {{walk.time}} </td>
+          <ng-container matColumnDef="tempo">
+            <th mat-header-cell *matHeaderCellDef class="numeric-header">
+              Tempo
+            </th>
+            <td mat-cell *matCellDef="let walk" class="numeric-cell">
+              {{ walk.tempo }}
+            </td>
           </ng-container>
 
-          <ng-container matColumnDef="avgSpeed">
-            <th mat-header-cell *matHeaderCellDef> Velocidade Média (km/h) </th>
-            <td mat-cell *matCellDef="let walk"> {{walk.avgSpeed | number:'1.1-2'}} </td>
+          <ng-container matColumnDef="velocidadeMedia">
+            <th mat-header-cell *matHeaderCellDef class="numeric-header">
+              Velocidade (m/s)
+            </th>
+            <td mat-cell *matCellDef="let walk" class="numeric-cell">
+              {{ walk.velocidadeMedia | number : "1.1-2" }}
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td
+              class="mat-cell no-data-cell"
+              [attr.colspan]="displayedColumns.length"
+            >
+              <mat-icon fontSet="material-symbols-outlined">info</mat-icon>
+              <span
+                >Nenhum histórico encontrado. Inicie um treino para
+                começar!</span
+              >
+            </td>
+          </tr>
         </table>
-      </mat-card>
+      </div>
     </div>
   </main>
 </body>

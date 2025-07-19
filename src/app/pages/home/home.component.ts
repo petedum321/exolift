@@ -1,25 +1,21 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { MatRadioModule } from '@angular/material/radio';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatIcon } from '@angular/material/icon';
-
-interface Walk {
-  date: string;
-  distance: number; // km
-  time: number; // minutes
-  avgSpeed: number; // km/h
-}
+import { Component, Signal } from "@angular/core";
+import { Router } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatTableModule } from "@angular/material/table";
+import { MatButtonModule } from "@angular/material/button";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatCardModule } from "@angular/material/card";
+import { MatIcon } from "@angular/material/icon";
+import {
+  Caminhada,
+  CaminhadaStateService,
+} from "../../state/caminhada-state.service";
 
 @Component({
-  selector: 'app-home',
+  selector: "app-home",
   standalone: true,
   imports: [
     CommonModule,
@@ -30,31 +26,33 @@ interface Walk {
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatIcon
+    MatIcon,
   ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent {
-  selectedOption: 'time' | 'distance' = 'time';
+  selectedOption: "time" | "distance" = "time";
   inputValue: number | null = null;
 
-  displayedColumns = ['date', 'distance', 'time', 'avgSpeed'];
+  displayedColumns = ["data", "distancia", "tempo", "velocidadeMedia"];
 
-  walks: Walk[] = [
-    { date: '2025-05-01', distance: 3.2, time: 30, avgSpeed: 6.4 },
-    { date: '2025-05-03', distance: 5, time: 50, avgSpeed: 6 },
-  ];
+  caminhadas: Signal<Caminhada[]>;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private historicoService: CaminhadaStateService
+  ) {
+    this.caminhadas = this.historicoService.historico;
+  }
 
   startWalk() {
     if (!this.inputValue || this.inputValue <= 0) return;
-    this.router.navigate(['/walk'], {
+    this.router.navigate(["/tracking"], {
       queryParams: {
         mode: this.selectedOption,
-        value: this.inputValue
-      }
+        value: this.inputValue,
+      },
     });
   }
 }

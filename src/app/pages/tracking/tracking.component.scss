@@ -197,13 +197,14 @@ mat-progress-bar {
 /* AÇÕES - BOTOES */
 .actions {
   display: flex;
-  justify-content: center;
+  //justify-content: center;
   gap: 36px;
   margin-top: 48px;
 }
 
 .actions button {
-  min-width: 190px;
+  width: 100%;
+  min-height: 70px;
   font-weight: 900;
   font-size: 1.2rem;
   border-radius: 40px;
@@ -211,6 +212,7 @@ mat-progress-bar {
   display: flex;
   align-items: center;
   gap: 18px;
+  justify-content: center;
   box-shadow: 0 8px 20px rgba(26, 43, 82, 0.15);
   transition: box-shadow 0.3s ease, background-color 0.3s ease;
   cursor: pointer;

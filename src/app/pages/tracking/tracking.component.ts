@@ -8,6 +8,11 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { ActivatedRoute, Router } from "@angular/router";
+import {
+  Caminhada,
+  CaminhadaStateService,
+} from "../../state/caminhada-state.service";
 
 @Component({
   selector: "app-tracking",
@@ -25,11 +30,23 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
   styleUrl: "./tracking.component.scss",
 })
 export class TrackingComponent implements OnInit, OnDestroy {
-  tempoDecorrido = "00:28";
-  progresso = 93;
+  // --- Propriedades da Meta de Treino ---
+  metaModo: string | null = null;
+  metaValor: number | null = null;
+
+  // --- Propriedades do Cronômetro ---
+  tempoDecorrido = "00:00"; // Apenas uma declaração, inicializado em 0
+  private totalSegundos = 0;
+  private intervalo: any;
+
+  // --- Propriedades dos Dados em Tempo Real ---
+  progresso = 93; // Você vai querer atualizar isso dinamicamente depois
   passos = 39;
   velocidade = 0.9;
+  data: Esp32Data | undefined;
+  private subscription: Subscription | undefined;
 
+  // --- Dados Mockados (Exemplo) ---
   pernaEsquerda = [
     {
       id: 1,
@@ -48,7 +65,6 @@ export class TrackingComponent implements OnInit, OnDestroy {
       rpm: 1158,
     },
   ];
-
   pernaDireita = [
     {
       id: 3,
@@ -68,22 +84,71 @@ export class TrackingComponent implements OnInit, OnDestroy {
     },
   ];
 
-  data: Esp32Data | undefined;
-  private subscription: Subscription | undefined;
-
-  constructor(private sensorService: WebsocketService) {}
+  constructor(
+    private sensorService: WebsocketService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private historicoService: CaminhadaStateService
+  ) {}
 
   ngOnInit(): void {
+    // 1. Inicia o cronômetro
+    this.iniciarCronometro();
+
+    // 2. Lê a meta da rota
+    this.metaModo = this.route.snapshot.queryParams["mode"];
+    const valorDaMetaString = this.route.snapshot.queryParams["value"];
+    this.metaValor = valorDaMetaString ? Number(valorDaMetaString) : null;
+    console.log("Meta de treino:", this.metaModo, this.metaValor);
+
+    // 3. Conecta ao Websocket para receber dados dos sensores
     this.subscription = this.sensorService.getData().subscribe({
       next: (d) => {
         console.log("Dados recebidos:", d);
         this.data = d;
+        // Futuramente, você pode atualizar 'passos', 'velocidade', etc., aqui
       },
       error: (e) => console.error("Erro ao buscar dados:", e),
     });
   }
 
   ngOnDestroy(): void {
+    // Limpa tudo ao sair do componente para evitar vazamento de memória
     this.subscription?.unsubscribe();
+    clearInterval(this.intervalo);
+  }
+
+  // --- MÉTODOS DE CONTROLE DO TREINO ---
+
+  finalizarTreino(): void {
+    console.log("Treino finalizado");
+    const caminhadaFixa: Caminhada = {
+      data: new Date().toLocaleDateString("pt-BR"), // Usamos a data atual para ficar realista
+      distancia: 2000, // Valor fixo de 2000 metros
+      tempo: "25:10", // Valor fixo de 25 minutos e 10 segundos
+      velocidadeMedia: 1.32, // Valor fixo de 1.32 m/s
+    };
+    this.historicoService.adicionarCaminhada(caminhadaFixa);
+
+    // É importante parar o cronômetro aqui também
+    clearInterval(this.intervalo);
+    this.router.navigate([""]);
+  }
+
+  // --- MÉTODOS DO CRONÔMETRO ---
+
+  private iniciarCronometro(): void {
+    this.intervalo = setInterval(() => {
+      this.totalSegundos++;
+      this.tempoDecorrido = this.formatarTempo(this.totalSegundos);
+    }, 1000);
+  }
+
+  private formatarTempo(totalSegundos: number): string {
+    const minutos = Math.floor(totalSegundos / 60);
+    const segundos = totalSegundos % 60;
+    const minutosFormatados = String(minutos).padStart(2, "0");
+    const segundosFormatados = String(segundos).padStart(2, "0");
+    return `${minutosFormatados}:${segundosFormatados}`;
   }
 }

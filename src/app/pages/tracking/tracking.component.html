@@ -1,9 +1,18 @@
 <!-- HEADER FIXO COM LOGO -->
+<div *ngIf="data">
+  <h2>Status do ESP32</h2>
+  <p><strong>Mensagem:</strong> {{ data.msg }}</p>
+  <p><strong>Valor:</strong> {{ data.value }}</p>
+  <p><strong>Temperatura:</strong> {{ data.temperatura }} °C</p>
+  <p><strong>Umidade:</strong> {{ data.umidade }} %</p>
+  <p><strong>Status:</strong> {{ data.status }}</p>
+</div>
+
 <header class="header">
   <img
-    src="/assets/logo-exolift.png"
-    alt="ExoLift Exoesqueleto Logo"
     class="logo"
+    alt="ExoLift Exoesqueleto Logo"
+    src="data:image/png;base64,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"
   />
   <h1 class="title">Monitoramento do Exoesqueleto</h1>
 </header>
@@ -21,8 +30,10 @@
     <div class="grid-cards">
       <mat-card class="card-highlight">
         <mat-card-header>
-          <mat-icon color="primary">timer</mat-icon>
-          <mat-card-title>Tempo Decorrido</mat-card-title>
+          <mat-icon color="primary" fontSet="material-symbols-outlined"
+            >schedule</mat-icon
+          >
+          <mat-card-title>Tempo</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <h2>{{ tempoDecorrido }}</h2>
@@ -46,7 +57,9 @@
 
       <mat-card class="card-highlight">
         <mat-card-header>
-          <mat-icon color="primary">directions_walk</mat-icon>
+          <mat-icon color="primary" fontSet="material-symbols-outlined"
+            >footprints</mat-icon
+          >
           <mat-card-title>Passos</mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -75,19 +88,18 @@
     <div class="grid-motors">
       <mat-card class="motor-card left">
         <mat-card-header>
-          <mat-icon color="primary">accessibility_new</mat-icon>
+          <mat-icon color="primary" fontSet="material-symbols-outlined"
+            >directions_walk</mat-icon
+          >
           <mat-card-title>Perna Esquerda</mat-card-title>
         </mat-card-header>
+
         <mat-card-content>
           <div *ngFor="let motor of pernaEsquerda" class="motor-info">
-            <h4>
-              ⚡ Motor {{ motor.id }}
-              <span class="status normal">NORMAL</span>
-            </h4>
+            <h4>⚡ Motor {{ motor.id }}</h4>
             <p>Ângulo: {{ motor.angulo.toFixed(2) }}°</p>
             <p>Torque: {{ motor.torque.toFixed(2) }} Nm</p>
             <p>Corrente: {{ motor.corrente.toFixed(2) }} A</p>
-            <p>Temperatura: {{ motor.temperatura.toFixed(2) }} °C</p>
             <p>RPM: {{ motor.rpm.toFixed(0) }}</p>
             <mat-divider></mat-divider>
           </div>
@@ -96,19 +108,16 @@
 
       <mat-card class="motor-card right">
         <mat-card-header>
-          <mat-icon color="primary">accessibility_new</mat-icon>
+          <mat-icon color="primary">directions_walk</mat-icon>
           <mat-card-title>Perna Direita</mat-card-title>
         </mat-card-header>
+
         <mat-card-content>
           <div *ngFor="let motor of pernaDireita" class="motor-info">
-            <h4>
-              ⚡ Motor {{ motor.id }}
-              <span class="status normal">NORMAL</span>
-            </h4>
+            <h4>⚡ Motor {{ motor.id }}</h4>
             <p>Ângulo: {{ motor.angulo.toFixed(2) }}°</p>
             <p>Torque: {{ motor.torque.toFixed(2) }} Nm</p>
             <p>Corrente: {{ motor.corrente.toFixed(2) }} A</p>
-            <p>Temperatura: {{ motor.temperatura.toFixed(2) }} °C</p>
             <p>RPM: {{ motor.rpm.toFixed(0) }}</p>
             <mat-divider></mat-divider>
           </div>
@@ -118,23 +127,14 @@
   </section>
 
   <!-- BOTOES DE AÇÃO -->
-  <div class="actions">
-    <button
-      mat-raised-button
-      color="primary"
-      class="btn-pause"
-      aria-label="Pausar treino"
-    >
-      <mat-icon>pause_circle_filled</mat-icon>
-      Pausar
-    </button>
+  <div class="actions" style="justify-content: flex-end">
     <button
       mat-raised-button
       color="warn"
       class="btn-stop"
       aria-label="Finalizar treino"
+      (click)="finalizarTreino()"
     >
-      <mat-icon>stop_circle</mat-icon>
       Finalizar Treino
     </button>
   </div>
