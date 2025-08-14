@@ -36,7 +36,7 @@ export class TrackingComponent implements OnInit, OnDestroy {
 
   metaModoExibido: string | null = null;
   metaValorExibido: number | null = null;
-  metaSelecao: number | null = null;
+  metaSelecao: string | null = null;
 
   // --- Propriedades do Cronômetro ---
   tempoDecorrido = "00:00"; // Apenas uma declaração, inicializado em 0

@@ -48,6 +48,12 @@ export class HomeComponent {
     this.caminhadas = this.historicoService.historico;
   }
 
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.perfilSelecionado = "jovem";
+  }
+
   startWalk() {
     if (!this.inputValue || this.inputValue <= 0) return;
     this.router.navigate(["/tracking"], {
