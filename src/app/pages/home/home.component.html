@@ -12,18 +12,37 @@
 
       <p class="card-subtitle">Escolha uma meta para começar a sua jornada.</p>
 
-      <mat-radio-group
-        [(ngModel)]="selectedOption"
-        class="radio-group"
-        aria-label="Modo de caminhada"
-      >
-        <mat-radio-button value="time" class="radio-btn"
-          >Por Tempo</mat-radio-button
+      <div class="radio-botao">
+        <mat-radio-group
+          [(ngModel)]="selectedOption"
+          class="radio-group"
+          aria-label="Modo de caminhada"
         >
-        <mat-radio-button value="distance" class="radio-btn"
-          >Por Distância</mat-radio-button
+          <mat-radio-button value="time" class="radio-btn"
+            >Por Tempo</mat-radio-button
+          >
+          <mat-radio-button value="distance" class="radio-btn"
+            >Por Distância</mat-radio-button
+          >
+        </mat-radio-group>
+
+        <mat-radio-group
+          [(ngModel)]="selectedProfile"
+          class="radio-group profile-group"
+          (change)="salvarPerfil($event.value)"
+          aria-label="Perfil de caminhada"
         >
-      </mat-radio-group>
+          <mat-radio-button value="jovem" class="radio-btn"
+            >Jovem</mat-radio-button
+          >
+          <mat-radio-button value="adulto" class="radio-btn"
+            >Adulto</mat-radio-button
+          >
+          <mat-radio-button value="idoso" class="radio-btn"
+            >Idoso</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
 
       <mat-form-field appearance="fill" class="input-field">
         <mat-label>

@@ -34,6 +34,8 @@ import {
 export class HomeComponent {
   selectedOption: "time" | "distance" = "time";
   inputValue: number | null = null;
+  selectedProfile: "jovem" | "adulto" | "idoso" = "jovem";
+  perfilSelecionado: string = "";
 
   displayedColumns = ["data", "distancia", "tempo", "velocidadeMedia"];
 
@@ -54,5 +56,9 @@ export class HomeComponent {
         value: this.inputValue,
       },
     });
+  }
+
+  salvarPerfil(valor: string) {
+    this.perfilSelecionado = valor;
   }
 }

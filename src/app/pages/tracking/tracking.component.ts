@@ -125,7 +125,7 @@ export class TrackingComponent implements OnInit, OnDestroy {
     const caminhadaFixa: Caminhada = {
       data: new Date().toLocaleDateString("pt-BR"), // Usamos a data atual para ficar realista
       distancia: 2000, // Valor fixo de 2000 metros
-      tempo: "25:10", // Valor fixo de 25 minutos e 10 segundos
+      tempo: this.tempoDecorrido, // Tempo decorrido do cronômetro
       velocidadeMedia: 1.32, // Valor fixo de 1.32 m/s
     };
     this.historicoService.adicionarCaminhada(caminhadaFixa);

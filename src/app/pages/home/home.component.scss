@@ -13,12 +13,15 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -2px rgba(0, 0, 0, 0.1);
   --border-radius: 1rem; // 16px
+  background-color: #e6f0ff; /* azul clarinho */
+  padding: 16px;
+  display: block;
+  height: 100vh; /* ocupa toda a altura da tela */
 }
 
 // Estilo geral
 body,
 html {
-  background: var(--background-page);
   font-family: "Inter", "Segoe UI", sans-serif;
 }
 
@@ -40,6 +43,7 @@ html {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 20px 40px;
+  background-color: #e6f0ff; /* azul clarinho */
 }
 
 // Design dos Cards
@@ -54,12 +58,23 @@ html {
   flex-direction: column;
   flex-grow: 1; // Permite que o card cresça
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 70px;
 
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
       0 4px 6px -4px rgba(0, 0, 0, 0.1);
   }
+}
+
+.radio-botao {
+  display: flex;
+  padding: 10px;
+  margin-bottom: 17px;
+}
+
+.profile-group {
+  margin-left: auto; // empurra para o lado direito da linha
 }
 
 .card-header {
@@ -91,7 +106,9 @@ html {
 
 // Inputs e Botões
 .radio-group {
-  margin-bottom: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
 }
 
 .input-field {
@@ -117,6 +134,7 @@ html {
   border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden; // Garante que a tabela interna se ajuste à borda arredondada
+  background-color: #e6f0ff; /* azul clarinho */
 }
 
 .walk-table {

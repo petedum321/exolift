@@ -17,7 +17,7 @@ export class CaminhadaStateService {
     this.historicoSignal.asReadonly();
 
   private dadosMocados: Caminhada[] = [
-    {
+    /*   {
       data: "18/07/2025",
       distancia: 1250,
       tempo: "15:30",
@@ -28,7 +28,7 @@ export class CaminhadaStateService {
       distancia: 800,
       tempo: "10:15",
       velocidadeMedia: 1.3,
-    },
+    }, */
   ];
 
   constructor() {
