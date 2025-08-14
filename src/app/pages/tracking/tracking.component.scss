@@ -89,6 +89,18 @@
   padding: 16px;
 }
 
+.section-header {
+  display: flex;
+  justify-content: space-between; /* Joga um item para cada ponta */
+  align-items: center; /* Alinha verticalmente no centro */
+  width: 100%; /* Ocupa toda a largura disponível */
+}
+
+.perfil-info {
+  font-size: 1rem; // Tamanho da fonte (ajuste se precisar)
+  color: #666; // Cor mais suave (opcional)
+}
+
 .card-highlight:hover {
   box-shadow: 0 16px 42px rgba(58, 123, 213, 0.35);
 }
@@ -208,7 +220,7 @@ mat-progress-bar {
 
 .actions button {
   width: 100%;
-  min-height: 70px;
+  min-height: 100px;
   font-weight: 900;
   font-size: 1.2rem;
   border-radius: 40px;

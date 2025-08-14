@@ -6,8 +6,16 @@
 
     <!-- SEÇÃO DADOS CAMINHADA -->
     <section class="section">
-      <h3>📈 Dados da Caminhada</h3>
-      <div class="goal">🎯 Meta: <strong>5 metros</strong></div>
+      <div class="section-header">
+        <h3>📈 Dados da Caminhada</h3>
+        <h3 class="perfil-info">
+          Perfil: <strong>{{ metaSelecao }}</strong>
+        </h3>
+      </div>
+
+      <div class="goal">
+        🎯 Meta: <strong>{{ metaValor }} {{ metaModoExibido }}</strong>
+      </div>
 
       <div class="grid-cards">
         <mat-card class="card-highlight">

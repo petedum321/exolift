@@ -54,6 +54,7 @@ export class HomeComponent {
       queryParams: {
         mode: this.selectedOption,
         value: this.inputValue,
+        perfil: this.perfilSelecionado,
       },
     });
   }

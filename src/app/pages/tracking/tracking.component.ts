@@ -34,6 +34,10 @@ export class TrackingComponent implements OnInit, OnDestroy {
   metaModo: string | null = null;
   metaValor: number | null = null;
 
+  metaModoExibido: string | null = null;
+  metaValorExibido: number | null = null;
+  metaSelecao: number | null = null;
+
   // --- Propriedades do Cronômetro ---
   tempoDecorrido = "00:00"; // Apenas uma declaração, inicializado em 0
   private totalSegundos = 0;
@@ -99,8 +103,23 @@ export class TrackingComponent implements OnInit, OnDestroy {
     this.metaModo = this.route.snapshot.queryParams["mode"];
     const valorDaMetaString = this.route.snapshot.queryParams["value"];
     this.metaValor = valorDaMetaString ? Number(valorDaMetaString) : null;
-    console.log("Meta de treino:", this.metaModo, this.metaValor);
+    this.metaSelecao = this.route.snapshot.queryParams["perfil"]; // Resgata o perfil da rota
 
+    if (this.metaModo === "distance") {
+      this.metaModoExibido = "metros";
+    }
+
+    if (this.metaModo === "time") {
+      this.metaModoExibido = "minutos";
+    }
+
+    console.log(
+      "Meta de treino:",
+      this.metaModo,
+      this.metaValor,
+      "Perfil:",
+      this.metaSelecao
+    );
     // 3. Conecta ao Websocket para receber dados dos sensores
     this.subscription = this.sensorService.getData().subscribe({
       next: (d) => {
