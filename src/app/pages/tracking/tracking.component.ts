@@ -1,5 +1,8 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Esp32Data, WebsocketService } from "../../services/websocket.service";
+import {
+  Esp32Status,
+  WebsocketService,
+} from "../../services/websocket.service";
 import { Subscription } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { MatCardModule } from "@angular/material/card";
@@ -47,7 +50,7 @@ export class TrackingComponent implements OnInit, OnDestroy {
   progresso = 93; // Você vai querer atualizar isso dinamicamente depois
   passos = 39;
   velocidade = 0.9;
-  data: Esp32Data | undefined;
+  data: Esp32Status | undefined;
   private subscription: Subscription | undefined;
 
   // --- Dados Mockados (Exemplo) ---
@@ -120,12 +123,10 @@ export class TrackingComponent implements OnInit, OnDestroy {
       "Perfil:",
       this.metaSelecao
     );
-    // 3. Conecta ao Websocket para receber dados dos sensores
-    this.subscription = this.sensorService.getData().subscribe({
-      next: (d) => {
+    this.subscription = this.sensorService.getStatus().subscribe({
+      next: (d: Esp32Status) => {
         console.log("Dados recebidos:", d);
-        this.data = d;
-        // Futuramente, você pode atualizar 'passos', 'velocidade', etc., aqui
+        this.passos = d.passos;
       },
       error: (e) => console.error("Erro ao buscar dados:", e),
     });

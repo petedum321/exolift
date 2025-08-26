@@ -2,25 +2,24 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, switchMap, timer } from "rxjs";
 
-export interface Esp32Data {
-  msg: string;
-  value: number;
-  temperatura: number;
-  umidade: number;
-  status: string;
+export interface Esp32Status {
+  perfil: string;
+  passos: number;
 }
 
 @Injectable({
   providedIn: "root",
 })
 export class WebsocketService {
-  private esp32Url = "http://192.168.0.105/data"; // Coloque o IP do ESP32 aqui
+  IP = "192.168.0.21"; // IP do ESP32
+  esp32Url = `http://${this.IP}/status`; // Corrigido para o endpoint /status
 
   constructor(private http: HttpClient) {}
 
-  getData(): Observable<Esp32Data> {
+  getStatus(): Observable<Esp32Status> {
+    // Atualiza a cada 2 segundos
     return timer(0, 2000).pipe(
-      switchMap(() => this.http.get<Esp32Data>(this.esp32Url))
+      switchMap(() => this.http.get<Esp32Status>(this.esp32Url))
     );
   }
 }

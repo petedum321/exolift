@@ -13,6 +13,7 @@ import {
   Caminhada,
   CaminhadaStateService,
 } from "../../state/caminhada-state.service";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-home",
@@ -41,9 +42,12 @@ export class HomeComponent {
 
   caminhadas: Signal<Caminhada[]>;
 
+  IP = "192.168.0.21";
+
   constructor(
     private router: Router,
-    private historicoService: CaminhadaStateService
+    private historicoService: CaminhadaStateService,
+    private http: HttpClient
   ) {
     this.caminhadas = this.historicoService.historico;
   }
@@ -56,11 +60,28 @@ export class HomeComponent {
 
   startWalk() {
     if (!this.inputValue || this.inputValue <= 0) return;
-    this.router.navigate(["/tracking"], {
-      queryParams: {
-        mode: this.selectedOption,
-        value: this.inputValue,
-        perfil: this.perfilSelecionado,
+
+    // Monta a URL de acordo com o perfil
+    const url = `http://${
+      this.IP
+    }/start-${this.perfilSelecionado.toLowerCase()}`;
+
+    // Faz a requisição GET
+    this.http.get(url, { responseType: "text" }).subscribe({
+      next: (res) => {
+        console.log("Resposta do ESP32:", res);
+
+        // Depois navega para /tracking
+        this.router.navigate(["/tracking"], {
+          queryParams: {
+            mode: this.selectedOption,
+            value: this.inputValue,
+            perfil: this.perfilSelecionado,
+          },
+        });
+      },
+      error: (err) => {
+        console.error("Erro ao chamar ESP32:", err);
       },
     });
   }
