@@ -47,9 +47,9 @@ export class TrackingComponent implements OnInit, OnDestroy {
   private intervalo: any;
 
   // --- Propriedades dos Dados em Tempo Real ---
-  progresso = 93; // Você vai querer atualizar isso dinamicamente depois
-  passos = 39;
-  velocidade = 0.9;
+  progresso = 0; // Você vai querer atualizar isso dinamicamente depois
+  passos = 0;
+  velocidade = 0;
   data: Esp32Status | undefined;
   private subscription: Subscription | undefined;
 
@@ -125,8 +125,31 @@ export class TrackingComponent implements OnInit, OnDestroy {
     );
     this.subscription = this.sensorService.getStatus().subscribe({
       next: (d: Esp32Status) => {
-        console.log("Dados recebidos:", d);
         this.passos = d.passos;
+
+        // Calcula distância percorrida em metros
+        const distanciaPercorrida = this.passos * 0.5;
+
+        // Calcula tempo em segundos
+        const tempoSegundos = this.totalSegundos;
+
+        // Atualiza velocidade média (m/s)
+        this.velocidade =
+          tempoSegundos > 0 ? distanciaPercorrida / tempoSegundos : 0;
+
+        // Atualiza progresso %
+        if (this.metaModo === "distance" && this.metaValor) {
+          this.progresso = Math.min(
+            (distanciaPercorrida / this.metaValor) * 100,
+            100
+          );
+        } else if (this.metaModo === "time" && this.metaValor) {
+          const metaSegundos = this.metaValor * 60; // metaValor em minutos
+          this.progresso = Math.min((tempoSegundos / metaSegundos) * 100, 100);
+        }
+
+        // Limita a uma casa decimal
+        this.progresso = Number(this.progresso.toFixed(1));
       },
       error: (e) => console.error("Erro ao buscar dados:", e),
     });
