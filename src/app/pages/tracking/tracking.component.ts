@@ -162,7 +162,6 @@ export class TrackingComponent implements OnInit, OnDestroy {
   }
 
   // --- MÉTODOS DE CONTROLE DO TREINO ---
-
   finalizarTreino(): void {
     console.log("Treino finalizado");
     const caminhadaFixa: Caminhada = {
