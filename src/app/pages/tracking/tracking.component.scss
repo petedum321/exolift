@@ -11,8 +11,23 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-.correta {
-  background-color: #e6f0ff; /* azul clarinho */
+.tracking-bg {
+  min-height: 100vh;
+  width: 100vw;
+  background: #e6f0ff; /* azul clarinho igual à tela inicial */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tracking-container {
+  max-width: 1000px;
+  width: 100%;
+  margin: 36px auto;
+  padding: 28px 36px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 10px 36px rgba(26, 43, 82, 0.15);
 }
 
 .logo {
