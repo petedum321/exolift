@@ -164,15 +164,18 @@ export class TrackingComponent implements OnInit, OnDestroy {
   // --- MÉTODOS DE CONTROLE DO TREINO ---
   finalizarTreino(): void {
     console.log("Treino finalizado");
-    const caminhadaFixa: Caminhada = {
-      data: new Date().toLocaleDateString("pt-BR"), // Usamos a data atual para ficar realista
-      distancia: 2000, // Valor fixo de 2000 metros
-      tempo: this.tempoDecorrido, // Tempo decorrido do cronômetro
-      velocidadeMedia: 1.32, // Valor fixo de 1.32 m/s
+    const distanciaPercorrida = this.passos * 0.5;
+    const tempoSegundos = this.totalSegundos;
+    const velocidadeMedia =
+      tempoSegundos > 0 ? distanciaPercorrida / tempoSegundos : 0;
+    const caminhada: Caminhada = {
+      data: new Date().toLocaleDateString("pt-BR"),
+      distancia: Number(distanciaPercorrida.toFixed(2)),
+      tempo: this.tempoDecorrido,
+      velocidadeMedia: Number(velocidadeMedia.toFixed(2)),
     };
-    this.historicoService.adicionarCaminhada(caminhadaFixa);
+    this.historicoService.adicionarCaminhada(caminhada);
 
-    // É importante parar o cronômetro aqui também
     clearInterval(this.intervalo);
     this.router.navigate([""]);
   }

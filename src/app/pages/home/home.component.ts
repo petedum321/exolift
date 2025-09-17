@@ -33,6 +33,39 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent {
+  exportarExcel() {
+    // Importação dinâmica para evitar problemas de build
+    import("xlsx").then((xlsx) => {
+      const caminhadasArr = this.caminhadas();
+      if (!caminhadasArr || caminhadasArr.length === 0) return;
+
+      // Monta os dados para exportação
+      const data = caminhadasArr.map((walk) => ({
+        Data: walk.data,
+        Distância: walk.distancia,
+        Tempo: walk.tempo,
+        "Velocidade Média": walk.velocidadeMedia,
+      }));
+
+      const worksheet = xlsx.utils.json_to_sheet(data);
+      const workbook = xlsx.utils.book_new();
+      xlsx.utils.book_append_sheet(workbook, worksheet, "Caminhadas");
+
+      // Gera o arquivo Excel em memória
+      const excelBuffer = xlsx.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+
+      // Salva o arquivo usando file-saver
+      import("file-saver").then((fs) => {
+        const blob = new Blob([excelBuffer], {
+          type: "application/octet-stream",
+        });
+        fs.saveAs(blob, "caminhadas.xlsx");
+      });
+    });
+  }
   selectedOption: "time" | "distance" = "time";
   inputValue: number | null = null;
   selectedProfile: "jovem" | "adulto" | "idoso" = "jovem";

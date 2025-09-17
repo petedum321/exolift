@@ -79,7 +79,19 @@
         <mat-icon class="card-header-icon" fontSet="material-symbols-outlined"
           >history</mat-icon
         >
-        <h1>Histórico de Atividades</h1>
+        <h1 style="display: inline-block; margin-right: auto">
+          Histórico de Atividades
+        </h1>
+        <button
+          mat-stroked-button
+          color="primary"
+          style="float: right; margin-left: 16px"
+          (click)="exportarExcel()"
+          [disabled]="!caminhadas() || caminhadas().length === 0"
+        >
+          <mat-icon fontSet="material-symbols-outlined">download</mat-icon>
+          Exportar para Excel
+        </button>
       </div>
       <p class="card-subtitle">
         Revise o progresso das suas últimas caminhadas.
