@@ -11,7 +11,7 @@ export interface Esp32Status {
   providedIn: "root",
 })
 export class WebsocketService {
-  IP = "192.168.0.21"; // IP do ESP32
+  IP = "192.168.4.1"; // IP do Access Point da ESP
   esp32Url = `http://${this.IP}/status`; // Corrigido para o endpoint /status
 
   constructor(private http: HttpClient) {}

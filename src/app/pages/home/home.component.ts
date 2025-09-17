@@ -75,7 +75,7 @@ export class HomeComponent {
 
   caminhadas: Signal<Caminhada[]>;
 
-  IP = "192.168.0.21";
+  IP = "192.168.4.1";
 
   constructor(
     private router: Router,
