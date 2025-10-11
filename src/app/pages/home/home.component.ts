@@ -68,8 +68,8 @@ export class HomeComponent {
   }
   selectedOption: "time" | "distance" = "time";
   inputValue: number | null = null;
-  selectedProfile: "jovem" | "adulto" | "idoso" = "jovem";
-  perfilSelecionado: string = "";
+  selectedProfile: "marcha" | "perna_esquerda" | "perna_direita" = "marcha";
+  perfilSelecionado: string = "marcha";
 
   displayedColumns = ["data", "distancia", "tempo", "velocidadeMedia"];
 
@@ -88,7 +88,7 @@ export class HomeComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.perfilSelecionado = "jovem";
+    this.perfilSelecionado = "marcha";
   }
 
   startWalk() {
