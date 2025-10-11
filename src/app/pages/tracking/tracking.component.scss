@@ -90,10 +90,21 @@
 }
 
 /* GRID CARDS */
-.grid-cards {
+
+// NOVO GRID 2x2 PARA OS CARDS PRINCIPAIS
+.grid-cards-2x2 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 32px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 36px;
+  margin: 32px 0 0 0;
+}
+
+@media (max-width: 900px) {
+  .grid-cards-2x2 {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
 }
 
 .card-highlight {

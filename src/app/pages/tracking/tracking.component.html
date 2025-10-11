@@ -4,20 +4,18 @@
 
     <mat-divider></mat-divider>
 
-    <!-- SEÇÃO DADOS CAMINHADA -->
+    <!-- NOVO LAYOUT: 2x2 CARDS GRANDES -->
     <section class="section">
       <div class="section-header">
-        <h3>📈 Dados da Caminhada</h3>
+        <h3>📈 Caminhada</h3>
         <h3 class="perfil-info">
           Perfil: <strong>{{ metaSelecao }}</strong>
         </h3>
       </div>
-
       <div class="goal">
         🎯 Meta: <strong>{{ metaValor }} {{ metaModoExibido }}</strong>
       </div>
-
-      <div class="grid-cards">
+      <div class="grid-cards-2x2">
         <mat-card class="card-highlight">
           <mat-card-header>
             <mat-icon color="primary" fontSet="material-symbols-outlined"
@@ -29,7 +27,6 @@
             <h2>{{ tempoDecorrido }}</h2>
           </mat-card-content>
         </mat-card>
-
         <mat-card class="card-highlight">
           <mat-card-header>
             <mat-icon color="primary">show_chart</mat-icon>
@@ -44,7 +41,6 @@
             ></mat-progress-bar>
           </mat-card-content>
         </mat-card>
-
         <mat-card class="card-highlight">
           <mat-card-header>
             <mat-icon color="primary" fontSet="material-symbols-outlined"
@@ -56,7 +52,6 @@
             <h2>{{ passos }}</h2>
           </mat-card-content>
         </mat-card>
-
         <mat-card class="card-highlight">
           <mat-card-header>
             <mat-icon color="primary">speed</mat-icon>
@@ -64,53 +59,6 @@
           </mat-card-header>
           <mat-card-content>
             <h2>{{ velocidade }} m/s</h2>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </section>
-
-    <mat-divider></mat-divider>
-
-    <!-- SEÇÃO DADOS TÉCNICOS -->
-    <section class="section">
-      <h3>🛠️ Dados Técnicos</h3>
-
-      <div class="grid-motors">
-        <mat-card class="motor-card left">
-          <mat-card-header>
-            <mat-icon color="primary" fontSet="material-symbols-outlined"
-              >directions_walk</mat-icon
-            >
-            <mat-card-title>Perna Esquerda</mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div *ngFor="let motor of pernaEsquerda" class="motor-info">
-              <h4>⚡ Motor {{ motor.id }}</h4>
-              <p>Ângulo: {{ motor.angulo.toFixed(2) }}°</p>
-              <p>Torque: {{ motor.torque.toFixed(2) }} Nm</p>
-              <p>Corrente: {{ motor.corrente.toFixed(2) }} A</p>
-              <p>RPM: {{ motor.rpm.toFixed(0) }}</p>
-              <mat-divider></mat-divider>
-            </div>
-          </mat-card-content>
-        </mat-card>
-
-        <mat-card class="motor-card right">
-          <mat-card-header>
-            <mat-icon color="primary">directions_walk</mat-icon>
-            <mat-card-title>Perna Direita</mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div *ngFor="let motor of pernaDireita" class="motor-info">
-              <h4>⚡ Motor {{ motor.id }}</h4>
-              <p>Ângulo: {{ motor.angulo.toFixed(2) }}°</p>
-              <p>Torque: {{ motor.torque.toFixed(2) }} Nm</p>
-              <p>Corrente: {{ motor.corrente.toFixed(2) }} A</p>
-              <p>RPM: {{ motor.rpm.toFixed(0) }}</p>
-              <mat-divider></mat-divider>
-            </div>
           </mat-card-content>
         </mat-card>
       </div>
