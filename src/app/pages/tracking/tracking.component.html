@@ -41,6 +41,7 @@
             ></mat-progress-bar>
           </mat-card-content>
         </mat-card>
+
         <mat-card class="card-highlight">
           <mat-card-header>
             <mat-icon color="primary" fontSet="material-symbols-outlined"
@@ -49,16 +50,25 @@
             <mat-card-title>Passos</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <h2>{{ passos }}</h2>
+            <h2 *ngIf="passos > 0; else aguardandoPassos">{{ passos }}</h2>
+            <ng-template #aguardandoPassos>
+              <h3>Aguardando...</h3>
+            </ng-template>
           </mat-card-content>
         </mat-card>
+
         <mat-card class="card-highlight">
           <mat-card-header>
             <mat-icon color="primary">speed</mat-icon>
             <mat-card-title>Velocidade</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <h2>{{ velocidade }} m/s</h2>
+            <h2 *ngIf="passos > 0; else aguardandoPassos">
+              {{ velocidade.toFixed(2) }} m/s
+            </h2>
+            <ng-template #aguardandoPassos>
+              <h3>Aguardando...</h3>
+            </ng-template>
           </mat-card-content>
         </mat-card>
       </div>

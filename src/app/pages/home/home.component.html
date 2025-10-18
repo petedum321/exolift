@@ -45,23 +45,6 @@
             >Por Distância</mat-radio-button
           >
         </mat-radio-group>
-
-        <mat-radio-group
-          [(ngModel)]="selectedProfile"
-          class="radio-group profile-group"
-          (change)="salvarPerfil($event.value)"
-          aria-label="Perfil de caminhada"
-        >
-          <mat-radio-button value="marcha" class="radio-btn"
-            >Marcha</mat-radio-button
-          >
-          <mat-radio-button value="perna_esquerda" class="radio-btn"
-            >Perna Esquerda</mat-radio-button
-          >
-          <mat-radio-button value="perna_direita" class="radio-btn"
-            >Perna Direita</mat-radio-button
-          >
-        </mat-radio-group>
       </div>
 
       <mat-form-field
@@ -90,6 +73,31 @@
           {{ selectedOption === "time" ? "hourglass_empty" : "straighten" }}
         </mat-icon>
       </mat-form-field>
+
+      <div class="modos">
+        <mat-radio-group
+          [(ngModel)]="selectedProfile"
+          class="radio-group profile-group"
+          (change)="salvarPerfil($event.value)"
+          aria-label="Perfil de caminhada"
+        >
+          <mat-radio-button value="marcha" class="radio-btn"
+            >Marcha</mat-radio-button
+          >
+          <mat-radio-button value="quadril_esquerdo" class="radio-btn"
+            >Quadril Esquerdo</mat-radio-button
+          >
+          <mat-radio-button value="joelho_esquerdo" class="radio-btn"
+            >Joelho Esquerdo</mat-radio-button
+          >
+          <mat-radio-button value="quadril_direito" class="radio-btn"
+            >Quadril Direito</mat-radio-button
+          >
+          <mat-radio-button value="joelho_direito" class="radio-btn"
+            >Joelho Direito</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
 
       <button
         mat-raised-button

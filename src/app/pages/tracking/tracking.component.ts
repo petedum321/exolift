@@ -16,6 +16,7 @@ import {
   Caminhada,
   CaminhadaStateService,
 } from "../../state/caminhada-state.service";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-tracking",
@@ -90,12 +91,13 @@ export class TrackingComponent implements OnInit, OnDestroy {
       rpm: 1277,
     },
   ];
-
+  IP = "192.168.4.1";
   constructor(
     private sensorService: WebsocketService,
     private router: Router,
     private route: ActivatedRoute,
-    private historicoService: CaminhadaStateService
+    private historicoService: CaminhadaStateService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -125,10 +127,11 @@ export class TrackingComponent implements OnInit, OnDestroy {
     );
     this.subscription = this.sensorService.getStatus().subscribe({
       next: (d: Esp32Status) => {
-        this.passos = d.passos;
+        console.log("Dados do WebSocket recebidos:", d); // Debug log
+        this.passos = d.passos || 0;
 
         // Calcula distância percorrida em metros
-        const distanciaPercorrida = this.passos * 0.5;
+        const distanciaPercorrida = this.passos * 0.8;
 
         // Calcula tempo em segundos
         const tempoSegundos = this.totalSegundos;
@@ -163,7 +166,22 @@ export class TrackingComponent implements OnInit, OnDestroy {
 
   // --- MÉTODOS DE CONTROLE DO TREINO ---
   finalizarTreino(): void {
-    console.log("Treino finalizado");
+    console.log("Iniciando finalização do treino...");
+    console.log("Passos totais:", this.passos);
+
+    // Monta a URL de acordo com o perfil
+    const url = `http://${this.IP}/stop`;
+
+    // Faz a requisição GET
+    this.http.get(url, { responseType: "text" }).subscribe({
+      next: (res) => {
+        console.log("Resposta do ESP32:", res);
+      },
+      error: (err) => {
+        console.error("Erro ao chamar ESP32:", err);
+      },
+    });
+
     const distanciaPercorrida = this.passos * 0.5;
     const tempoSegundos = this.totalSegundos;
     const velocidadeMedia =
