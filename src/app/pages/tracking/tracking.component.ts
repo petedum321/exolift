@@ -54,43 +54,6 @@ export class TrackingComponent implements OnInit, OnDestroy {
   data: Esp32Status | undefined;
   private subscription: Subscription | undefined;
 
-  // --- Dados Mockados (Exemplo) ---
-  pernaEsquerda = [
-    {
-      id: 1,
-      angulo: 55.35,
-      torque: 6.26,
-      corrente: 2.36,
-      temperatura: 43.89,
-      rpm: 1227,
-    },
-    {
-      id: 2,
-      angulo: 34.08,
-      torque: 11.59,
-      corrente: 1.5,
-      temperatura: 34.32,
-      rpm: 1158,
-    },
-  ];
-  pernaDireita = [
-    {
-      id: 3,
-      angulo: 48.35,
-      torque: 14.09,
-      corrente: 2.83,
-      temperatura: 47.02,
-      rpm: 1513,
-    },
-    {
-      id: 4,
-      angulo: 15.28,
-      torque: 8.08,
-      corrente: 2.89,
-      temperatura: 39.66,
-      rpm: 1277,
-    },
-  ];
   IP = "192.168.4.1";
   constructor(
     private sensorService: WebsocketService,
@@ -127,18 +90,25 @@ export class TrackingComponent implements OnInit, OnDestroy {
     );
     this.subscription = this.sensorService.getStatus().subscribe({
       next: (d: Esp32Status) => {
-        console.log("Dados do WebSocket recebidos:", d); // Debug log
-        this.passos = d.passos || 0;
+        console.log("Chegou no next do status:", d); // Debug log
+
+        this.passos = d.passoAtual || 0;
+        console.log("Valor dos passos ESP:", d.passoAtual); // Debug log
+        console.log("Valor dos passos INTERFACE:", this.passos);
 
         // Calcula distância percorrida em metros
         const distanciaPercorrida = this.passos * 0.8;
+        console.log("Distancia percorrida:", this.passos);
 
         // Calcula tempo em segundos
         const tempoSegundos = this.totalSegundos;
 
         // Atualiza velocidade média (m/s)
+        console.log("TEMPO SEGUNDO:", tempoSegundos);
+
+        // Atualiza velocidade média (agora em km/h)
         this.velocidade =
-          tempoSegundos > 0 ? distanciaPercorrida / tempoSegundos : 0;
+          tempoSegundos > 0 ? (distanciaPercorrida / tempoSegundos) * 3.6 : 0;
 
         // Atualiza progresso %
         if (this.metaModo === "distance" && this.metaValor) {
@@ -146,9 +116,13 @@ export class TrackingComponent implements OnInit, OnDestroy {
             (distanciaPercorrida / this.metaValor) * 100,
             100
           );
+          console.log("META VALOR:", this.metaValor);
+
+          console.log("MODO DISTANCIA:", this.progresso);
         } else if (this.metaModo === "time" && this.metaValor) {
           const metaSegundos = this.metaValor * 60; // metaValor em minutos
           this.progresso = Math.min((tempoSegundos / metaSegundos) * 100, 100);
+          console.log("META SEGUNDOS:", metaSegundos);
         }
 
         // Limita a uma casa decimal

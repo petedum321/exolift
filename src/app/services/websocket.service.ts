@@ -4,7 +4,7 @@ import { Observable, switchMap, timer } from "rxjs";
 
 export interface Esp32Status {
   perfil: string;
-  passos: number;
+  passoAtual: number;
 }
 
 @Injectable({

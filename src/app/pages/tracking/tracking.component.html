@@ -60,11 +60,11 @@
         <mat-card class="card-highlight">
           <mat-card-header>
             <mat-icon color="primary">speed</mat-icon>
-            <mat-card-title>Velocidade</mat-card-title>
+            <mat-card-title>Velocidade média</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <h2 *ngIf="passos > 0; else aguardandoPassos">
-              {{ velocidade.toFixed(2) }} m/s
+              {{ velocidade.toFixed(2) }} km/h
             </h2>
             <ng-template #aguardandoPassos>
               <h3>Aguardando...</h3>
